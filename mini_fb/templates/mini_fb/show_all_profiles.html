@@ -1,4 +1,7 @@
 <h1>Showing all profiles</h1>
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
 <table>
     <colgroup>
         <col span="1" style="width: 40%">
@@ -12,12 +15,13 @@
             <th>Image</th>
         </tr>
 
-    {% for profile in profile_list %}
+    <!-- {% for profile in profile_list %} -->
         <tr>
-            <td>{{profile.first_name}} {{profile.last_name}}</td>
+            <td><a href='{% url "show_profile_page" profile.pk %}'>{{profile.first_name}} {{profile.last_name}}</td></a>
             <td>{{profile.city}}</td>
-            <td><img src="{{profile.image_url}}" style="max-width: 400;"></td>
+            <td><img src="{{profile.image_url}}" style="max-width: 200;"></td>
         </tr>
 
-    {% endfor %}
+    <!-- {% endfor %} -->
 </table>
+{% endblock %}

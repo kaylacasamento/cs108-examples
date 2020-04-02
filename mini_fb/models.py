@@ -14,3 +14,19 @@ class Profile(models.Model):
     def __str__(self):
         '''Returns a string representation of this object.'''
         return str(self.first_name) + ' ' + str(self.last_name) + ' ' + str(self.city) + ' ' + str(self.email_address) + ' ' + str(self.image_url)
+
+    def get_status_messages(self):
+        '''Return a QuerySet of all quotes for this person'''
+        status = StatusMessage.objects.filter(profile=self.pk)
+        return status
+
+class StatusMessage(models.Model):
+    '''Models the data attributes of Facebook status message'''
+
+    timestamp = models.DateTimeField(auto_now_add=True)
+    message = models.TextField(blank=True)
+    profile = models.ForeignKey('profile', on_delete=models.CASCADE)
+
+    def __str__(self):
+        '''Returns a string representation of this object'''
+        return str(self.profile) + ' ' + str(self.message) + ' ' + str(self.timestamp)
