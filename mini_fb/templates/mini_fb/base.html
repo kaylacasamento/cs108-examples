@@ -5,7 +5,8 @@
     </head>
     <body>
         <header>
-            <a href="{% url 'show_all_profiles' %}">All Profiles</a>
+            <a href="{% url 'show_all_profiles' %}">All Profiles</a> |
+            <a href="{% url 'create_profile' %}">Create a New Profile</a> |
         </header>
     {% block content %}
     {% endblock %}

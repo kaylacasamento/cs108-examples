@@ -1,5 +1,7 @@
 <!-- templates/home.html -->
+{% extends 'quote/base.html' %}
 
+{% block content %}
 <h1>Showing all quotes</h1>
 
 <!-- scriplet code to display the value of the variable 'all_quotes_list' -->
@@ -7,8 +9,10 @@
 
 <ul>
     {% for quote in all_quotes_list %}
-    <li>"{{quote.text}}" - {{quote.author}}<br>
-        <img src="{{quote.image_url}}" style="max-width: 400;">
+    <li>"{{quote.text}}" - <a href="{% url 'person' quote.person.pk %}">{{quote.person}}</a><br>
+        <img src="{{quote.person.get_random_image}}" style="max-width: 400;">
     </li>
     {% endfor %}
 </ul>
+
+{% endblock %}

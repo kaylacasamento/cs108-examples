@@ -17,4 +17,25 @@
         <td align="center">{{status.message}}</td><br>
     </tr>
 {% endfor %}
+<p>
+    <a href="{% url 'update_profile' show_profile_page.pk %}">Edit this profile</a>
+</p>
+<h2>Post a Status Message</h2>
+<form method='POST' action="{% url 'post_status' show_profile_page.pk %}">
+    {% csrf_token %}
+    <table>
+        {% for field in create_status_form %}
+        <tr>
+            <th>{{field.name}}</th>
+            <td><textarea name="message" rows=8 cols=64></textarea>></td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" name="Update Status!" value="Update Status!">
+            </td>
+        </tr>
+    </table>
+</form>
 </body>
