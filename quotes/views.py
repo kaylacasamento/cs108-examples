@@ -14,19 +14,19 @@ class HomePageView(ListView):
     '''Create a subclass of ListView to display all quotes.'''
 
     model = Quote # retrieve objects of type Quote from the database
-    template_name = 'quote/home.html'
+    template_name = 'quotes/home.html'
     context_object_name = 'all_quotes_list' # how to find the data in the template file
 
 class QuotePageView(DetailView):
     '''Show the details for one quote.'''
     model = Quote
-    template_name = 'quote/quote.html'
+    template_name = 'quotes/quote.html'
     context_object_name = 'quote'
 
 class RandomQuotePageView(DetailView):
     '''Show one quote selected at random.'''
     model = Quote
-    template_name = 'quote/quote.html'
+    template_name = 'quotes/quote.html'
     context_object_name = 'quote'
 
     # pick one quote at random
@@ -46,7 +46,7 @@ class PersonPageView(DetailView):
     '''Show all quotes and all images for one person.'''
 
     model = Person
-    template_name = 'quote/person.html'
+    template_name = 'quotes/person.html'
     # context_object_name = 'person'
 
     def get_context_data(self, **kwargs):
@@ -67,19 +67,19 @@ class CreateQuoteView(CreateView):
     '''A view to create a new quote and save it to the database.'''
 
     form_class = CreateQuoteForm
-    template_name = "quote/create_quote.html"
+    template_name = "quotes/create_quote.html"
 
 class UpdateQuoteView(UpdateView):
     '''A view to update a quote and save it to the database.'''
 
     form_class = UpdateQuoteForm
-    template_name = 'quote/update_quote.html'
+    template_name = 'quotes/update_quote.html'
     queryset = Quote.objects.all()
 
 class DeleteQuoteView(DeleteView):
     '''A view to delete a quote and save it to the database.'''
 
-    template_name = 'quote/delete_quote.html'
+    template_name = 'quotes/delete_quote.html'
     queryset = Quote.objects.all()
     # success_url = '../../all' # what to do after deleting a quote
 
