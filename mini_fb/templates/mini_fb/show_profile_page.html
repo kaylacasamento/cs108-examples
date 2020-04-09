@@ -1,3 +1,5 @@
+{% extends 'mini_fb/base.html' %}
+{% block content %}
 <h1>Showing profile</h1>
 <body>
 <table>
@@ -10,26 +12,36 @@
         <td>{{show_profile_page.city}}</td>
     </tr>
 </table>
+<table>
 <img src="{{show_profile_page.image_url}}" style="max-width: 300;"></a><br><br><br>
 {% for status in show_profile_page.get_status_messages %}
     <tr>
-        <td align="center">{{status.timestamp}}</td>
-        <td align="center">{{status.message}}</td><br>
+        <td>{{status.timestamp}}</td>
+        <td>{{status.message}}</td>
+        <td>{% if status.image %}
+            <img src='{{status.image.url}}' style='max-width: 200;'>
+            {% endif %}
+        </td>
+        <td><a href="{% url 'delete_status' profile_pk=show_profile_page.pk status_pk=status.pk %}">Delete status</a></td><br>
     </tr>
 {% endfor %}
+</table>
 <p>
     <a href="{% url 'update_profile' show_profile_page.pk %}">Edit this profile</a>
 </p>
 <h2>Post a Status Message</h2>
-<form method='POST' action="{% url 'post_status' show_profile_page.pk %}">
+<form method='POST' action="{% url 'post_status' show_profile_page.pk %}" enctype='multipart/form-data'>
     {% csrf_token %}
     <table>
-        {% for field in create_status_form %}
         <tr>
-            <th>{{field.name}}</th>
-            <td><textarea name="message" rows=8 cols=64></textarea>></td>
+            <th>Status Update</th>
+            <td><textarea name="message" rows=8 cols=64></textarea></td>
         </tr>
-        {% endfor %}
+        <tr>
+            <th>Image</th>
+            <td>
+                <input type='file' name='image' value='upload'>
+            </td>
         <tr>
             <td></td>
             <td>
@@ -39,3 +51,4 @@
     </table>
 </form>
 </body>
+{% endblock %}

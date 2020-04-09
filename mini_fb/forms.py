@@ -19,8 +19,9 @@ class UpdateProfileForm(forms.ModelForm):
 
 class CreateStatusMessageForm(forms.ModelForm):
     '''A form to update a profile's status to the database.'''
-
+    image = forms.ImageField(required=False)
+    
     class Meta:
         '''Associate this form with the StatusMessage model.'''
         model = StatusMessage
-        fields = ['message', ] # which fields from model we can update
+        fields = ['message', 'image', ] # which fields from model we can update

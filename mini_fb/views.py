@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from .models import Profile, StatusMessage
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import CreateProfileForm, UpdateProfileForm, CreateStatusMessageForm
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -51,20 +51,50 @@ def create_status_message(request, pk):
         '''Process a form submission to post a new status message.'''
         # find the profile that matches the 'pk' in the URL
         profile = Profile.objects.get(pk=pk)
+        form = CreateStatusMessageForm(request.POST or None, request.FILES or None)
 
         # if and only if we are processing a POST request, try to read the data
-        if request.method == 'POST':
+        if request.method == 'POST' or request.method == 'FILES':
 
             # read the data from this form submission
             message = request.POST['message']
+            image_file = request.FILES.get('image')
 
             # save the new status message object to the database
-            if message:
+            if message or image_file:
 
                 sm = StatusMessage()
                 sm.profile = profile
                 sm.message = message
-                sm.save()
+                image = form.save(commit=False)
+                image.profile = profile
+                image.save()
+                
+        return redirect(reverse('show_profile_page', kwargs={'pk':pk}))
+                
+class DeleteStatusMessageView(DeleteView):
+    '''Delete a status message'''
 
-            # redirect the user to the show_profile_page view
-            return redirect(reverse('show_profile_page', kwargs={'pk':pk}))
+    template_name = 'mini_fb/delete_status_form.html'
+    queryset = StatusMessage.objects.all()
+
+    def get_context_data(self, **kwargs):
+        '''Override the get_context_data method'''
+        context = super(DeleteStatusMessageView, self).get_context_data(**kwargs)
+        st_msg = StatusMessage.objects.get(pk=self.kwargs['status_pk'])
+        context['st_msg'] = st_msg
+        return context
+
+    def get_object(self):
+        '''Read URL data values'''
+        profile_pk = self.kwargs['profile_pk']
+        status_pk = self.kwargs['status_pk']
+        st_msg = StatusMessage.objects.get(pk=status_pk)
+        return st_msg
+
+    def get_success_url(self):
+        '''Get success URL'''
+        profile_pk = self.kwargs['profile_pk']
+        # status_pk = self.kwargs['status_pk']
+        # status = Profile.objects.filter(pk=status_pk).first()
+        return reverse('show_profile_page', kwargs={'pk':profile_pk})

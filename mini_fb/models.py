@@ -30,8 +30,9 @@ class StatusMessage(models.Model):
 
     timestamp = models.DateTimeField(auto_now_add=True)
     message = models.TextField(blank=True)
+    image = models.ImageField(blank=True)
     profile = models.ForeignKey('profile', on_delete=models.CASCADE)
 
     def __str__(self):
         '''Returns a string representation of this object'''
-        return '%s %s' % (self.timestamp, self.message)
+        return '%s %s %s' % (self.timestamp, self.message, self.image)
