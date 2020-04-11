@@ -1,0 +1,36 @@
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<table>
+    {% for possible_friends in profile.get_friend_suggestions %}
+    <tr>
+        <td>{{possible_friends.first_name}} {{possible_friends.last_name}}</td>
+        <td>
+            {% if possible_friends.image_url %}
+            <img src='{{possible_friends.image_url}}' style='max-width: 100;'>
+            {% endif %}
+        </td>
+        <td>
+            <form method='POST' enctype='multipart/form-data' action='{% url "add_friend" profile_pk=profile.pk friend_pk=suggestions.pk %}'>
+                {% csrf_token %}
+                <input type='submit' name='Add Friend' value='Add Friend'>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
+<!-- <a href='{% url "show_profile_page" profile.pk %}'>Back to {{show_profile_page.first_name}}'s profile page</a>
+<h3>{{show_profile_page.first_name}}'s News Feed</h3>
+<table>
+    {% for friends in profile.get_friend_suggestions %}
+    <form method='POST' enctype='multipart/form-data' action='{% url "add_friend" profile_pk=profile.pk friend_pk=friends.pk %}'>
+    <tr>
+        <td align="center">{{friends.first_name}} {{friends.last_name}}</td>
+        <td align="center"><img src="{{friends.image_url}}" style="max-width: 150;"></td>
+        <td><input type="submit" name="Add Friend" value="Add Friend"></td>
+    </tr></form>
+    {% endfor %}
+</table>
+-->

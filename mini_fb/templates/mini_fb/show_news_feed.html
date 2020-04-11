@@ -1,0 +1,17 @@
+{% extends 'mini_fb/base.html' %}
+{% block content %}
+{% csrf_token %}
+<a href='{% url "show_profile_page" profile.pk %}'>Back to {{show_profile_page.first_name}}'s profile page</a>
+<h3>{{show_profile_page.first_name}}'s News Feed</h3>
+{% for status in profile.get_news_feed %}
+    <tr>
+        <td>{{status.timestamp}}</td>
+        <td>{{status.message}}</td>
+        <td>{% if status.image %}
+            <img src='{{status.image.url}}' style='max-width: 200;'>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
+
+{% endblock %}

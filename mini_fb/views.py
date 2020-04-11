@@ -98,3 +98,43 @@ class DeleteStatusMessageView(DeleteView):
         # status_pk = self.kwargs['status_pk']
         # status = Profile.objects.filter(pk=status_pk).first()
         return reverse('show_profile_page', kwargs={'pk':profile_pk})
+
+class ShowNewsFeedView(DetailView):
+    '''Shows the news feed'''
+    model = StatusMessage
+    template_name = 'mini_fb/show_profile_page.html'
+    context_object_name = 'profile'
+    queryset = StatusMessage.objects.all()
+
+    def get_context_data(self, **kwargs):
+        '''Override the get_context_data method'''
+        context = super(ShowNewsFeedView, self).get_context_data(**kwargs)
+        nws_fd = StatusMessage.objects.get(pk=self.kwargs['status_pk'])
+        context['nws_fd'] = nws_fd
+        return context
+
+    def get_object(self):
+        '''Read URL data values'''
+        profile_pk = self.kwargs['profile_pk']
+        nws_fd = StatusMessage.objects.get(pk=profile_pk)
+        return nws_fd
+
+    def get_success_url(self):
+        '''Get success URL'''
+        profile_pk = self.kwargs['profile_pk']
+        return reverse('show_profile_page', kwargs={'pk':profile_pk})
+
+class ShowPossibleFriendsView(DetailView):
+    '''Show friend suggestions'''
+    model = Profile
+    template_name = 'mini_fb/show_possible_friends.html'
+    context_object_name = 'friends'
+    queryset = Profile.objects.all()
+
+def add_friend(request, profile_pk, friend_pk):
+    '''Process the add_friend request to add a friend for a given profile'''
+    addafriend = Profile.objects.get(pk=profile_pk)
+    acceptafriend = Profile.objects.get(pk=friend_pk)
+    addafriend.friends.add(acceptafriend)
+    addafriend.save()
+    return redirect(reverse('show_profile_page', kwargs={'pk':profile_pk}))
