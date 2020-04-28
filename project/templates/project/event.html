@@ -1,0 +1,29 @@
+<!-- templates/event.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<center>
+    <h1 style='color:darkred'>{{event.event}}</h1>
+
+    <table>
+        <tr>
+            <th style='color:white'>Date</th>
+            <td>{{event.date}}</td>
+        </tr>
+        <tr>
+            <th style='color:white'>Time</th>
+            <td>{{event.time}}</td>
+        </tr>
+        <tr>
+            <th style='color:white'>Location</th>
+            <td>{{event.location}}</td>
+        </tr>
+    </table>
+</center>
+<p>
+    <center><a href='{% url "update_event" event.pk %}'>Update this event</a></center>
+</p>
+<p>
+    <center><a href='{% url "delete_event" event.pk %}'>Delete this event</a></center>
+</p>
+{% endblock %}

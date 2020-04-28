@@ -1,0 +1,38 @@
+<!-- project/athlete.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<center>
+<h1 style='color:darkred'>{{athlete.first_name}} {{athlete.last_name}}</h1>
+
+<img src='{{athlete.image_url}}' style='max-width: 400;'>
+
+<table>
+    <tr>
+        <th style='color:white'>Class Year</th>
+        <td>{{athlete.class_year}}</td>
+    </tr>
+    <tr>
+        <th style='color:white'>Hometown</th>
+        <td>{{athlete.hometown}}</td>
+    </tr>
+    <tr>
+        <th style='color:white'>Position</th>
+        <td>{{athlete.position}}</td>
+    </tr>
+    {% if athlete.events %}
+    <tr>
+        <th style='color:white'>Events</th>
+        <td><a href='{% url "event" athlete.events.pk %}'>{{athlete.events}}</a></td>
+    </tr>
+    {% endif %}
+</table>
+<p>
+    <a href='{% url "update_athlete" athlete.pk %}'>Update {{athlete.first_name}}'s profile</a>
+</p>
+<p>
+    <a href='{% url "delete_athlete" athlete.pk %}'>Delete {{athlete.first_name}}'s profile</a>
+</p>
+</center>
+
+{% endblock %}

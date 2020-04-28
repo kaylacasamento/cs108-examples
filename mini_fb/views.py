@@ -116,7 +116,7 @@ class ShowNewsFeedView(DetailView):
     def get_object(self):
         '''Read URL data values'''
         profile_pk = self.kwargs['profile_pk']
-        nws_fd = StatusMessage.objects.get(pk=profile_pk)
+        nws_fd = Profile.objects.get(pk=profile_pk)
         return nws_fd
 
     def get_success_url(self):

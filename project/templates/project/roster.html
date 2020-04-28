@@ -1,0 +1,33 @@
+<!-- project/roster.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<center><h1 style='color:darkred'>Meet the Team</h1></center>
+
+<table>
+    <colgroup>
+        <col span="1" style="width: 40%">
+        <col span="1" style="width: 40%">
+        <col span="1" style="width: 40%">
+    </colgroup>
+
+        <tr>
+            <th>Name</th>
+            <th>Hometown</th>
+            <th>Position</th>
+            <th>Image</th>
+        </tr>
+
+        {% for cheer in all_athletes_list %}
+        <tr>
+            <td style='color:white'><a href='{% url "athlete" cheer.pk %}'>{{cheer.first_name}} {{cheer.last_name}}</a></td>
+            <td style='color:white'>{{cheer.hometown}}</td>
+            <td>{{cheer.position}}</td>
+            <td><img src="{{cheer.image_url}}" style="max-width: 200;"></td>
+        </tr>
+        {% endfor %}
+</table>
+<br>
+<center><a href='{% url "create_athlete" %}'>Add an athlete to the roster</a></center>
+{% endblock %}

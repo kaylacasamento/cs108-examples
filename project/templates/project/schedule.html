@@ -1,0 +1,34 @@
+<!-- project/schedule.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<center><h1 style='color:darkred'>Schedule</h1></center>
+
+<table>
+    <colgroup>
+        <col span="1" style="width: 10%">
+        <col span="1" style="width: 10%">
+        <col span="1" style="width: 20%">
+        <col span="1" style="width: 20%">
+    </colgroup>
+
+    <tr>
+        <th style="text-align:center">Date</th>
+        <th style="text-align:center">Time</th>
+        <th style="text-align:center">Event</th>
+        <th style="text-align:center">Location</th>
+    </tr>
+
+    {% for schedule in all_events_list %}
+    <tr>
+        <td style="text-align:center; color:white">{{schedule.date}}</td>
+        <td style="text-align:center; color:white">{{schedule.time}}</td>
+        <td style="text-align:center; color:white"><a href='{% url "event" schedule.pk %}'>{{schedule.event}}</a></td>
+        <td style="text-align:center; color:white">{{schedule.location}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+<center><a href='{% url "create_event" %}'>Add an event to the schedule</a></center>
+{% endblock %}

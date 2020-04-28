@@ -1,0 +1,25 @@
+<!-- templates/create_athlete.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h2 style='color:darkred'>Update an athlete on the roster</h2>
+
+<form method='POST'>
+{% csrf_token %}
+    <table>
+        {% for field in form %}
+        <tr>
+            <th style='color:white'>{{field.name}}</th>
+            <td>{{field}}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" name="Update athlete" value="Update athlete">
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

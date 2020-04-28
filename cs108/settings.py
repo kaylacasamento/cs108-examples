@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'hello_world.apps.HelloWorldConfig',
     'pages.apps.PagesConfig',
     'quote',
-    'mini_fb', #new application!
+    'mini_fb.apps.MiniFbConfig', #new application!
+    'project', # final project application
 ]
 
 MIDDLEWARE = [
